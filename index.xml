@@ -28,13 +28,18 @@ $$ \sum_{n=1}^{\infty} 2^{-n} = 1 $$
     </item>
     
     <item>
-      <title>Biography</title>
+      <title>About</title>
       <link>https://cjt-jackton.github.io/about/</link>
       <pubDate>Sun, 15 Mar 2020 14:01:01 +0800</pubDate>
       
       <guid>https://cjt-jackton.github.io/about/</guid>
-      <description>I love making stuffs that looks beautiful.
-Interests  computer graphics art  Education </description>
+      <description>I love playing video games and making stuffs that looks beautiful.
+I started this blog mainly to keep track of my journey through game development. And I hope the informations on this site can help you in some ways.
+Education  🎓 Rochester Insititute of Technology
+ Master of Computer Science (2019)
+  🎓 South China University of Technology
+ Bachelor of Software Engineering (2017)
+ </description>
     </item>
     
   </channel>

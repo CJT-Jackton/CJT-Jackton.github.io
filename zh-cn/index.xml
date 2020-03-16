@@ -26,11 +26,13 @@
       <pubDate>Sun, 15 Mar 2020 14:01:34 +0800</pubDate>
       
       <guid>https://cjt-jackton.github.io/zh-cn/about/</guid>
-      <description>Hugo is a static site engine written in Go.
-It makes use of a variety of open source projects including:
- Cobra Viper J Walter Weatherman Cast  Learn more and contribute on GitHub.
-Setup Some fun facts about Hugo:
- Built in Go Loosely inspired by Jekyll Primarily developed by spf13 on the train while commuting to and from Manhattan. Coded in Vim using spf13-vim  Have questions or suggestions?</description>
+      <description>你好，我是一个兴趣使然的程序员。
+本博客主要是作为我自己学习的记录。如果这里的内容对你有些许帮助的话那是我的荣幸。
+Education  🎓 Rochester Insititute of Technology
+ 计算机科学 硕士 (2019)
+  🎓 South China University of Technology
+ 软件工程 学士 (2017)
+ </description>
     </item>
     
   </channel>
