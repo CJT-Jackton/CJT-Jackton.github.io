@@ -6,9 +6,37 @@
     <description>Recent content in Tags on Chinese tea ~ 上海红茶馆</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
+    <lastBuildDate>Sat, 23 May 2020 10:43:59 +0800</lastBuildDate>
     
 	<atom:link href="https://cjt-jackton.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Shader</title>
+      <link>https://cjt-jackton.github.io/tags/shader/</link>
+      <pubDate>Sat, 23 May 2020 10:43:59 +0800</pubDate>
+      
+      <guid>https://cjt-jackton.github.io/tags/shader/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Unity</title>
+      <link>https://cjt-jackton.github.io/tags/unity/</link>
+      <pubDate>Sat, 23 May 2020 10:43:59 +0800</pubDate>
+      
+      <guid>https://cjt-jackton.github.io/tags/unity/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Universal Render Pipeline</title>
+      <link>https://cjt-jackton.github.io/tags/universal-render-pipeline/</link>
+      <pubDate>Sat, 23 May 2020 10:43:59 +0800</pubDate>
+      
+      <guid>https://cjt-jackton.github.io/tags/universal-render-pipeline/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>

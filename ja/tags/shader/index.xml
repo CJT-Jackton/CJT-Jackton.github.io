@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Shader on Chinese tea ~ 上海紅茶館</title>
+    <link>https://cjt-jackton.github.io/ja/tags/shader/</link>
+    <description>Recent content in Shader on Chinese tea ~ 上海紅茶館</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 23 May 2020 10:43:59 +0800</lastBuildDate>
+    
+	<atom:link href="https://cjt-jackton.github.io/ja/tags/shader/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Shader Breakdown - LCD Display</title>
+      <link>https://cjt-jackton.github.io/ja/posts/shader-breakdown-lcd-display/</link>
+      <pubDate>Sat, 23 May 2020 10:43:59 +0800</pubDate>
+      
+      <guid>https://cjt-jackton.github.io/ja/posts/shader-breakdown-lcd-display/</guid>
+      <description>So after reading the shader tutorial serial of Alan, I decided to make my own version of LCD display shader. Without further ado, let&amp;rsquo;s get straight into it. This effect itself quiet simple, when you move close enough to the display, you can see the individual pixels of the LCD screen.
+So first off, we will need a texture that represents the actual pixel of display. A quick google search of &amp;ldquo;LCD pixel&amp;rdquo; will do the trick for you.</description>
+    </item>
+    
+  </channel>
+</rss>

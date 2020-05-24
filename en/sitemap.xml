@@ -3,6 +3,126 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://cjt-jackton.github.io/posts/</loc>
+    <lastmod>2020-05-23T10:43:59+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://cjt-jackton.github.io/ja/posts/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://cjt-jackton.github.io/zh-cn/posts/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://cjt-jackton.github.io/posts/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://cjt-jackton.github.io/tags/shader/</loc>
+    <lastmod>2020-05-23T10:43:59+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://cjt-jackton.github.io/ja/tags/shader/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://cjt-jackton.github.io/zh-cn/tags/shader/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://cjt-jackton.github.io/tags/shader/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://cjt-jackton.github.io/posts/shader-breakdown-lcd-display/</loc>
+    <lastmod>2020-05-23T10:43:59+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://cjt-jackton.github.io/ja/posts/shader-breakdown-lcd-display/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://cjt-jackton.github.io/zh-cn/posts/shader-breakdown-lcd-display/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://cjt-jackton.github.io/posts/shader-breakdown-lcd-display/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://cjt-jackton.github.io/tags/</loc>
+    <lastmod>2020-05-23T10:43:59+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://cjt-jackton.github.io/ja/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://cjt-jackton.github.io/zh-cn/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://cjt-jackton.github.io/tags/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://cjt-jackton.github.io/tags/unity/</loc>
+    <lastmod>2020-05-23T10:43:59+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://cjt-jackton.github.io/ja/tags/unity/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://cjt-jackton.github.io/zh-cn/tags/unity/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://cjt-jackton.github.io/tags/unity/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://cjt-jackton.github.io/tags/universal-render-pipeline/</loc>
+    <lastmod>2020-05-23T10:43:59+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ja"
+                href="https://cjt-jackton.github.io/ja/tags/universal-render-pipeline/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://cjt-jackton.github.io/zh-cn/tags/universal-render-pipeline/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://cjt-jackton.github.io/tags/universal-render-pipeline/"
+                />
+  </url>
+  
+  <url>
     <loc>https://cjt-jackton.github.io/posts/first-post/</loc>
     <lastmod>2020-03-15T23:06:43+08:00</lastmod>
     <xhtml:link
@@ -19,26 +139,6 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://cjt-jackton.github.io/posts/first-post/"
-                />
-  </url>
-  
-  <url>
-    <loc>https://cjt-jackton.github.io/posts/</loc>
-    <lastmod>2020-03-15T23:06:43+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://cjt-jackton.github.io/zh-cn/posts/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ja"
-                href="https://cjt-jackton.github.io/ja/posts/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://cjt-jackton.github.io/posts/"
                 />
   </url>
   
@@ -98,25 +198,6 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://cjt-jackton.github.io/categories/"
-                />
-  </url>
-  
-  <url>
-    <loc>https://cjt-jackton.github.io/tags/</loc>
-    <xhtml:link
-                rel="alternate"
-                hreflang="ja"
-                href="https://cjt-jackton.github.io/ja/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://cjt-jackton.github.io/zh-cn/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://cjt-jackton.github.io/tags/"
                 />
   </url>
   

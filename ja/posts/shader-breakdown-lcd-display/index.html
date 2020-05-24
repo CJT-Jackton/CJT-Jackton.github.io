@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="CJT">
+    <meta name="description" content="CJTのサイト">
+    <meta name="keywords" content="blog,developer,personal">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Shader Breakdown - LCD Display"/>
+<meta name="twitter:description" content="Breakdown of the LCD display shader."/>
+
+    <meta property="og:title" content="Shader Breakdown - LCD Display" />
+<meta property="og:description" content="Breakdown of the LCD display shader." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cjt-jackton.github.io/ja/posts/shader-breakdown-lcd-display/" />
+<meta property="article:published_time" content="2020-05-23T10:43:59+08:00" />
+<meta property="article:modified_time" content="2020-05-23T10:43:59+08:00" /><meta property="og:site_name" content="Chinese tea ~ 上海紅茶館" />
+
+
+    
+      <base href="https://cjt-jackton.github.io/ja/posts/shader-breakdown-lcd-display/">
+    
+    <title>
+  Shader Breakdown - LCD Display · Chinese tea ~ 上海紅茶館
+</title>
+
+    
+      <link rel="canonical" href="https://cjt-jackton.github.io/ja/posts/shader-breakdown-lcd-display/">
+    
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+
+    
+      
+      
+      <link rel="stylesheet" href="https://cjt-jackton.github.io/css/coder.min.a7461c3e6be9e32257f20316e50c7c172893327ab290736bf9b2eef0279eae55.css" integrity="sha256-p0YcPmvp4yJX8gMW5Qx8FyiTMnqykHNr&#43;bLu8CeerlU=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+      
+        
+        
+        <link rel="stylesheet" href="https://cjt-jackton.github.io/css/coder-dark.min.f2968d0d64bff2e2962abf5473bd3cfe659f24d1f379a34396ba191e05f78f92.css" integrity="sha256-8paNDWS/8uKWKr9Uc708/mWfJNHzeaNDlroZHgX3j5I=" crossorigin="anonymous" media="screen" />
+      
+    
+
+    
+      <link rel="stylesheet" href="https://cjt-jackton.github.io/css/particles.css" />
+    
+      <link rel="stylesheet" href="https://cjt-jackton.github.io/css/prism.css" />
+    
+
+
+
+    
+
+    <link rel="icon" type="image/png" href="https://cjt-jackton.github.io/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://cjt-jackton.github.io/images/favicon-16x16.png" sizes="16x16">
+
+    <meta name="generator" content="Hugo 0.67.0" />
+  </head>
+
+  
+  
+    
+  
+  <body class="colorscheme-dark">
+    <main class="wrapper" id="particles-js">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="https://cjt-jackton.github.io/ja">
+      Chinese tea ~ 上海紅茶館
+    </a>
+    
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+      
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://cjt-jackton.github.io/ja/posts/">ブログ</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://cjt-jackton.github.io/ja/projects/">プロジェクト</a>
+          </li>
+        
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://cjt-jackton.github.io/ja/about/">自己紹介</a>
+          </li>
+        
+      
+      
+        
+        
+        
+          
+        
+          
+            
+              <li class="navigation-item menu-separator">
+                <span>|</span>
+              </li>
+              
+            
+            <li class="navigation-item">
+              
+              
+              
+              
+              
+              <a href="https://cjt-jackton.github.io/zh-cn/posts/shader-breakdown-lcd-display/">中文</a>
+            </li>
+          
+        
+          
+            
+            <li class="navigation-item">
+              
+              
+              
+              
+              
+              <a href="https://cjt-jackton.github.io/posts/shader-breakdown-lcd-display/">English</a>
+            </li>
+          
+        
+      
+    </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">Shader Breakdown - LCD Display</h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fas fa-calendar"></i>
+              <time datetime='2020-05-23T10:43:59&#43;08:00'>
+                2020 年 5 月 23 日
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fas fa-clock"></i>
+              2分で読めます
+            </span>
+          </div>
+          
+          <div class="tags">
+  <i class="fas fa-tag"></i>
+    <a href="https://cjt-jackton.github.io/ja/tags/shader/">Shader</a>
+      <span class="separator">•</span>
+    <a href="https://cjt-jackton.github.io/ja/tags/unity/">Unity</a>
+      <span class="separator">•</span>
+    <a href="https://cjt-jackton.github.io/ja/tags/universal-render-pipeline/">Universal Render Pipeline</a></div>
+
+        </div>
+      </header>
+
+      <div>
+        
+        <p><img src="https://cjt-jackton.github.io/images/shader-breakdown-lcd-display/screenshots-01.png" alt=""></p>
+<p>So after reading the shader tutorial serial of Alan, I decided to make my own version of LCD display shader. Without further ado, let&rsquo;s get straight into it. This effect itself quiet simple, when you move close enough to the display, you can see the individual pixels of the LCD screen.</p>
+<p>So first off, we will need a texture that represents the actual pixel of display. A quick google search of &ldquo;LCD pixel&rdquo; will do the trick for you. Note that that is some displays that have none standard layout, like Pentile style display, but we won&rsquo;t get into these and only stick with the normal RGB pixel layout for the sake of simplicity of this tutorial.</p>
+<p>We want to know the dimensions of the texture we using as the display content, and use it to scale the uv coordinate so that the pixel tile on each pixel of the texture. In Unity, you can call <code>TextureName_TexelSize</code> and Unity will automatically set up the right value for you.</p>
+<pre><code class="language-hlsl" data-lang="hlsl">float2 pixelMaskUV = input.uv * _BaseMap_TexelSize.zw;
+</code></pre><p>Then we simply multiply the LCD pixel texture and the color sampled from the display content texture. You might immediately notice that the display become dim. The reason why is we multiplied the color with the pixel texture, however each color channel only occupied less than 1/3 of the pixel grid, so we lost over 2/3 of the luminance. We can compensate the lost brightness by multiply a multiplier. You can find out the right value of your pixel texture in Photoshop&rsquo;s histogram view. Take my texture as example, the average value of red, green, blue is around 63 hence the multipier should be 255/63 = 4.</p>
+<h3 id="pixelize-texture">Pixelize Texture</h3>
+<pre><code class="language-hlsl" data-lang="hlsl">half2 pixelMaskUV = uv * _BaseMap_TexelSize.zw;
+half2 pixelizedUV = floor(pixelMaskUV) + half2(0.5, 0.5);
+pixelizedUV /= _BaseMap_TexelSize.zw;
+</code></pre><h3 id="manually-compute-mipmap-level">Manually Compute Mipmap Level</h3>
+<p>First we need to know how texture lod level is calculated on the graphic side. The specification of OpenGL actually give us a clue of how this is done. In the chapter 3.9.11</p>
+<p>\[
+\rho = max \Bigg\{ \sqrt{\Big(\frac{\partial{u}}{\partial{x}}\Big)^{2} + \Big(\frac{\partial{v}}{\partial{x}}\Big)^{2} + \Big(\frac{\partial{w}}{\partial{x}}\Big)^{2}}, \sqrt{\Big(\frac{\partial{u}}{\partial{y}}\Big)^{2} + \Big(\frac{\partial{v}}{\partial{y}}\Big)^{2} + \Big(\frac{\partial{w}}{\partial{y}}\Big)^{2}} \Bigg\}
+\]</p>
+<p>\[
+\lambda(x, y) = \log_2{[\rho(x, y)]}
+\]</p>
+<pre><code class="language-hlsl" data-lang="hlsl">// The OpenGL Graphics System: A Specification 4.2
+//  - chapter 3.9.11, equation 3.21
+half2 pixelMaskTexcoord = pixelMaskUV * _PixelMask_TexelSize.zw;
+
+half2 duvdx = ddx(pixelMaskTexcoord);
+half2 duvdy = ddy(pixelMaskTexcoord);
+
+half scaleFactor = max(dot(duvdx, duvdx), dot(duvdy, duvdy));
+half mipmapLevel = 0.5 * log2(scaleFactor);
+</code></pre>
+      </div>
+
+
+      <footer>
+        
+
+
+        <script src="https://utteranc.es/client.js"
+    repo= "CJT-Jackton/CJT-Jackton.github.io-HUGO"
+    issue-term="pathname"
+    theme="github-dark"
+    crossorigin="anonymous"
+    async>
+  </script>
+      </footer>
+    </article>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js" id="MathJax-script"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ['$', '$'], ['\\(', '\\)']
+        ],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  </section>
+
+      </div>
+
+      <footer class="footer">
+  <section class="container">
+    
+      <p>お菓子よ！この酒飲みが！</p>
+    
+    
+      
+        © 2020
+      
+       CJT 
+    
+    
+       · 
+      利用技術 <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/">Coder</a> & <a href="https://github.com/VincentGarreau/particles.js/">Particles.js</a>.
+    
+    
+  </section>
+</footer>
+
+    </main>
+    
+    <script src="https://cjt-jackton.github.io/js/particles.js"></script>
+    
+    <script src="https://cjt-jackton.github.io/js/app.js"></script>
+    
+    <script src="https://cjt-jackton.github.io/js/prism.js"></script>
+    
+
+    
+
+    
+
+  </body>
+
+</html>
