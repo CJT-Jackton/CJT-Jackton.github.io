@@ -158,7 +158,7 @@
             </span>
             <span class="reading-time">
               <i class="fas fa-clock"></i>
-              6-minute read
+              8-minute read
             </span>
           </div>
           
@@ -190,23 +190,27 @@
  Github<br>
 <a href="https://github.com/CJT-Jackton/URP-LCD-Dispaly-Example">Source Code</a></p>
 </blockquote>
-<p>So after reading this <a href="https://www.alanzucconi.com/2016/05/04/lcd-shader/">shader tutorial</a> by Alan Zucconi, I decided to make my own version of LCD display shader. Without further ado, let&rsquo;s get straight into it. This effect itself quiet simple, when viewing from distance, the LCD display act identical as a standard emissive material. But once you move close enough to the display, you can see the individual pixels of the LCD screen.</p>
+<p>After reading this <a href="https://www.alanzucconi.com/2016/05/04/lcd-shader/">shader tutorial</a> by Alan Zucconi, I decided to make my own version of LCD display shader. This effect itself is quiet simple, when viewing from distance, the LCD display act identical as a standard emissive material. But once you move close enough to the display, you can see the individual pixels of the LCD screen. What different from the original tutorial is, I use derivative in fragment shader to determine when to reveal the pixel structure of the display therefore the shader can adapt to all kinds of texture with different resolution.</p>
 <hr>
 <h3 id="pixelize-display-content">Pixelize Display Content</h3>
-<p>When you magnify the texture, you will notice that the texture become blurrer. That&rsquo;s because the texture is using <a href="https://en.wikipedia.org/wiki/Bilinear_interpolation">Bilinear filtering</a>. When grabbing one point on the texture, four nearest pixels value were sampled and interpolated base on the distance. However on the actual display, each display pixel can only emit exact one color. So general speaking the texture of display content should use Point filtering to keep the pixel grid when magnify, but Point filtering also cause some sampling artifacts since the sampling point can&rsquo;t always lands exactly on the position of one pixel. Is there a way to keep using Bilinear filtering and making the texture pixelize when close-up?</p>
+<p>When you magnify the texture, you will notice that the texture become blurrer. That&rsquo;s because the texture is using <a href="https://en.wikipedia.org/wiki/Bilinear_interpolation">Bilinear filtering</a>. When sampling one point on the texture, four nearest pixels value were grabbed and interpolated base on the distance to the sampling position. However on the actual display, each display pixel can only emits exactly one color. So it is only reasonable that the display content texture should use Point filtering to keep the pixel grid when magnify, but Point filtering also cause some sampling artifacts since the sampling point can&rsquo;t always lands exactly on the position of one texture pixel. Is there a way to keep using Bilinear filtering and making the texture pixelize when close-up?</p>
 <p>And yes there is. We can manipulate the uv coordinate to trick the texture filtering. Using <code>floor()</code> returning the biggest integer that smaller than the texture coordinate, we can snap to the position of the nearest pixel to sampling point.</p>
-<pre><code class="language-hlsl" data-lang="hlsl">float2 pixelMaskUV = uv * _BaseMap_TexelSize.zw;
+<pre><code class="language-hlsl">float2 pixelMaskUV = uv * _BaseMap_TexelSize.zw;
 float2 pixelizedUV = floor(pixelMaskUV) + float2(0.5, 0.5);
 pixelizedUV /= _BaseMap_TexelSize.zw;
-</code></pre><p>You can also use <code>ceil()</code> or <code>round()</code>, they are functionally same here. Now we just need to know when to use the normal uv coordinate and when to use the manipulated coordinate. Hold on a second, we gonna figure it out in the following section.</p>
+</code></pre>
+<p>You can also use <code>ceil()</code> or <code>round()</code>, they are functionally same here. Now we just need to know when to use the normal uv coordinate and when to use the manipulated uv coordinate. Hold on a second, we gonna figure it out in following section.</p>
 <hr>
 <h3 id="lcd-display-pixel">LCD Display Pixel</h3>
-<p>So first off, we will need a texture that represents the actual pixel of display. A quick google search of &ldquo;LCD pixel&rdquo; will do the trick for you. Note that that is some displays that have none standard layout, like Pentile style display, but we won&rsquo;t get into these and only stick with the normal RGB pixel layout for the sake of simplicity of this tutorial.</p>
-<p>We want to know the dimensions of the texture we using as the display content, and use it to scale the uv coordinate so that the pixel tile on each pixel of the texture. In Unity, you can call <code>TextureName_TexelSize</code> and Unity will automatically set up the right value for you.</p>
-<pre><code class="language-hlsl" data-lang="hlsl">float2 pixelMaskUV = input.uv * _BaseMap_TexelSize.zw;
-</code></pre><p>Then we simply multiply the LCD pixel texture and the color sampled from the display content texture.</p>
-<p>You might immediately notice that the display become dim. The reason why is we multiplied the color with the pixel texture, however each color channel only occupied less than 1/3 of the pixel grid, so we lost over 2/3 of the luminance. We can compensate the lost brightness by multiply a multiplier. You can find out the right value of your pixel texture in Photoshop&rsquo;s histogram view. Take my texture as example, the average value of red, green, blue is around 63 hence the multipier should be 255/63 = 4.</p>
-<p>Also, the texture seems to has some weird color shift while viewing from certain distance. That is cause by some undesired artifacts of the automatic generated texture mipmap. It is very clear in the figure down below. The 5th level of the mipmap is completely turns into another color that we don&rsquo;t really want.</p>
+<p>We need a texture that represents the actual pixel structure of display that revealed when close-up. A quick google search of &ldquo;LCD pixel&rdquo; will do the trick for you, or you can draw one by yourself like I do. Note that that are some displays out there using none standard layout, like Pentile style display, but we won&rsquo;t get into these and only stick with the normal RGB pixel layout for the sake of simplicity of this tutorial.</p>
+<p>We want to know the dimensions of the texture we using as the display content, and use it to scale the uv coordinate so that the pixel tile on each pixel of the texture. In Unity, you can call <code>TextureName_TexelSize</code> and the thoughtful engine will automatically set up the right value for you.</p>
+<pre><code class="language-hlsl">float2 pixelMaskUV = uv * _BaseMap_TexelSize.zw;
+</code></pre>
+<p>Then we simply multiply the LCD pixel texture and the color sampled from the display content texture. You might immediately notice that the display become fainter than before. The reason why is we multiplied the color with the pixel texture, however each color channel&rsquo;s subpixel only occupied less than 1/3 of the pixel grid, so we lost over 2/3 of the luminance. We can compensate the lost brightness by multiply the color with a multiplier. You can find out the right value of your own pixel texture in Photoshop&rsquo;s histogram view. Take my texture as example, the histogram view tells the average value of red, green, blue is around 63, hence the multipier should be 255 \(\div\) 63 \(\approx\) 4.</p>
+<pre><code class="language-hlsl">half4 pixelMaskColor = SAMPLE_TEXTURE2D(_PixelMask, sampler_PixelMask, pixelMaskUV);
+pixelMaskColor *= _PixelLuma;
+</code></pre>
+<p>Also, the texture seems to has some weird color shift while viewing from certain distance. That is cause by some undesired artifacts of the automatic generated texture mipmap. It is very clear in the figure down below. The 5th level of the mipmap is completely turns into another color that we don&rsquo;t really want. We need a way to figure out the right texture mipmap level.</p>
 <figure>
     <img src="https://cjt-jackton.github.io/images/shader-breakdown-lcd-display/pixel-mipmap.png"
          alt="Each mipmap level generated by Unity. Take a look on Mip 5, you can see why it is causing trouble."/> <figcaption>
@@ -214,9 +218,13 @@ pixelizedUV /= _BaseMap_TexelSize.zw;
         </figcaption>
 </figure>
 
-<p>We need a way to figure out the right texture mipmap level.</p>
+<blockquote>
+<p><strong>Why don&rsquo;t use the &ldquo;Fadeout Mip Maps&rdquo; option?</strong></p>
+<p><a href="https://docs.unity3d.com/Manual/class-TextureImporter.html">Fadeout Mip Maps</a> in texture import setting can fadeout the selected mipmap levels to gray. In fact I do used Fadeout Mip Maps and it can effectively eliminate the color shift artifact. However the gray color it fadeout to isn&rsquo;t necessary the gray you want, for example my pixel texture should average to 25% gray but it turns out to be a very arbitrary 53% gray, means the color value won&rsquo;t be identical with the standard emissive material after applied luminace multiplier. That being said we still need to figure out the actual mipmap level used in fragment shader and do some operations it.</p>
+</blockquote>
 <hr>
 <h3 id="manually-compute-mipmap-level">Manually Compute Mipmap Level</h3>
+<p>Let&rsquo;s start addressing the elephant in the room here &mdash;&mdash; where is the right distance that we start revealing the pixel structure on the LCD display with different resolution? The natural idea is, it depends on the pixel real estate on screen. When a LCD pixel is occupying over a certain amount of screen pixel, we reveal it. And that happens to be how we calculate which texture mipmap level to use in fragment shader!</p>
 <p>First we need to know how texture lod level is calculated on the graphic side. The <a href="https://www.khronos.org/registry/OpenGL/specs/gl/glspec42.core.pdf">OpenGL specification</a> actually give us a clue of how this is done. In the chapter 3.9.11 we have the following equation:</p>
 <p>\[
 \lambda(x, y) = \log_2{\big(\rho(x, y)\big)}
@@ -231,7 +239,7 @@ pixelizedUV /= _BaseMap_TexelSize.zw;
 \lambda(x, y) = 0.5 \times \log_{2}{\Bigg( max \bigg\{ \Big(\frac{\partial{u}}{\partial{x}}\Big)^{2} + \Big(\frac{\partial{v}}{\partial{x}}\Big)^{2}, \Big(\frac{\partial{u}}{\partial{y}}\Big)^{2} + \Big(\frac{\partial{v}}{\partial{y}}\Big)^{2} \bigg\}\Bigg)}
 \]</p>
 <p>Converting into HLSL code.</p>
-<pre><code class="language-hlsl" data-lang="hlsl">// The OpenGL Graphics System: A Specification 4.2
+<pre><code class="language-hlsl">// The OpenGL Graphics System: A Specification 4.2
 //  - chapter 3.9.11, equation 3.21
 float2 pixelMaskTexcoord = pixelMaskUV * _PixelMask_TexelSize.zw;
 
@@ -240,14 +248,25 @@ float2 duvdy = ddy(pixelMaskTexcoord);
 
 float scaleFactor = max(dot(duvdx, duvdx), dot(duvdy, duvdy));
 float mipmapLevel = 0.5 * log2(scaleFactor);
-</code></pre><blockquote>
-<p><strong>Why don&rsquo;t use <code>CalculateLevelOfDetail</code>?</strong></p>
-<p>Well there is nothing to stopping you use <code>CalculateLevelOfDetail</code> instead of <code>ComputeTextureLOD</code> in your code, however, keep in mind that using it will require shader model 5.0 which isn&rsquo;t always wanted due to compatibility issue.</p>
+</code></pre>
+<blockquote>
+<p><strong>Why don&rsquo;t use <code>CALCULATE_TEXTURE2D_LOD</code>?</strong></p>
+<p>There is nothing stopping you using <code>CALCULATE_TEXTURE2D_LOD</code> instead of <code>ComputeTextureLOD</code>, however, keep in mind that using it in your code will require <a href="https://docs.unity3d.com/Manual/SL-ShaderCompileTargets.html">shader model 5.0</a> which isn&rsquo;t always supported in your target platform. Conduct your own research.</p>
 </blockquote>
 <hr>
-<h3 id="interpolate-between-mipmap-level">Interpolate Between Mipmap Level</h3>
-<p>Now we can interpolate between the normal texture and pixelized texture with texture lod value. The texture lod value needs to be remap to [0, 1].</p>
-<p>Finally, to add some finishing touches, you can implement some glitch effect that quite common in the old television.</p>
+<h3 id="putting-stuff-together">Putting Stuff Together</h3>
+<p>Now we can interpolate between the normal texture and pixelized texture, and reveal the LCD pixel base on texture lod value. The texture lod value needs to be remap to [0, 1] before use to interpolation. In my case, I want to start revealing the pixel structure at mipmap level 4 and fully switch to LCD pixel at mipmap level 3. Feel free to experiment with different values and find the right combination for you.</p>
+<pre><code class="language-hlsl">half pixelization = saturate(Remap01(mipmapLevel, half2(1, 4)));
+half pixelremoval = saturate(Remap01(mipmapLevel, half2(3, 4)));
+
+uv = lerp(pixelizedUV, uv, pixelization);
+half4 texColor = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, uv);
+
+pixelMaskColor = lerp(pixelMaskColor, half4(1, 1, 1, 1), pixelremoval);
+half3 color = texColor.rgb * pixelMaskColor.rgb;
+</code></pre>
+<p>Make sure the HDR and post processing are enabled and use the ACES tone mapping so that you can see the effect. We also want to use <a href="https://en.wikipedia.org/wiki/Trilinear_filtering">Trilinear filtering</a> for the LCD pixel texture. Trilinear filtering will interpolate between mipmap level on top of Bilinear filtering, effectively remove the abruptly jump between texture lod when zoom in and zoom out with the cost of a small overhead.</p>
+<p>Finally, to add some finishing touches, you can implement some glitch effect. There are all sorts of glitches out there, and the most common one is interlacing artifact caused by mismatched refresh rate of signal source and display. I gonna leave the implementation to you.</p>
 <hr>
 <h3 id="conclusion">Conclusion</h3>
 <p>That&rsquo;s it for this small breakdown of LCD display shader, hope you learn something about derivative in fragment shader and texture lod (I certainly do). You can find the full <a href="https://github.com/CJT-Jackton/URP-LCD-Dispaly-Example">source code</a> on my Github. Also I put the link to the original shader tutorial by Alan Zucconi down below, and a similar article by Austin O&rsquo;brien that definitely worth reading.</p>
