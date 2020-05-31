@@ -17,8 +17,10 @@
       <pubDate>Sat, 23 May 2020 10:43:59 +0800</pubDate>
       
       <guid>https://cjt-jackton.github.io/zh-cn/posts/shader-breakdown-lcd-display/</guid>
-      <description>🏗️ 正在翻译中。在此之前请先阅读英文的版本。 So after reading the shader tutorial serial of Alan, I decided to make my own version of LCD display shader. Without further ado, let&amp;rsquo;s get straight into it. This effect itself quiet simple, when you move close enough to the display, you can see the individual pixels of the LCD screen.
-So first off, we will need a texture that represents the actual pixel of display. A quick google search of &amp;ldquo;LCD pixel&amp;rdquo; will do the trick for you.</description>
+      <description>🏗️ 正在翻译中。在此之前请先阅读英文的版本。   This post is the breakdown of LCD display shader. Source code for Unity URP is provided.
+ Github
+Source Code
+ After reading this shader tutorial by Alan Zucconi, I decided to make my own version of LCD display shader. This effect itself is quiet simple, when viewing from distance, the LCD display act identical as a standard emissive material. But once you move close enough to the display, you can see the individual pixels of the LCD screen.</description>
     </item>
     
   </channel>
